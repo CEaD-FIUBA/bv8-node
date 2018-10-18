@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/CEaD-FIUBA/bv8-node#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "google-auth-library": "^2.0.0",
+    "googleapis": "^34.0.0"
   }
 }
