@@ -1,8 +1,9 @@
 var fs = require('fs');
 var readline = require('readline');
-var google = require('googleapis');
-var googleAuth = require('google-auth-library');
 var python_shell = require('python-shell');
+var OAuth2 = google.auth.OAuth2;
+var { google } = require('googleapis');
+
 
 //Informacion del video que quiero obtener informacion
 //var videoId = "QdjO0e10O_I";
@@ -12,28 +13,28 @@ var idCaption;
 var title;
 var videoId;
 // If modifying these scopes, delete your previously saved credentials
-  // at ~/.credentials/youtube-nodejs-quickstart.json
+// at ~/.credentials/youtube-nodejs-quickstart.json
 var SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-    process.env.USERPROFILE) + '/.credentials/';
+  process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'youtube-nodejs-quickstart.json';
-console.log('TOKEN_DIR'+TOKEN_PATH);
+console.log('TOKEN_DIR' + TOKEN_PATH);
 
 module.exports = {
-  foo : function(response,video_id) {
-        return new Promise(function(resolve,reject){
-          videoId = video_id
-          // Load client secrets from a local file.
-          fs.readFile('client_secret.json', function processClientSecrets(err, content) {
-            if (err) {
-              console.log('Error loading client secret file: ' + err);
-              reject('error loading client secret file');
-            }
-            // Authorize a client with the loaded credentials, then call the YouTube API.
-             authorize(JSON.parse(content), getIdCaption,response,resolve);
-        });
+  foo: function (response, video_id) {
+    return new Promise(function (resolve, reject) {
+      videoId = video_id
+      // Load client secrets from a local file.
+      fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+        if (err) {
+          console.log('Error loading client secret file: ' + err);
+          reject('error loading client secret file');
+        }
+        // Authorize a client with the loaded credentials, then call the YouTube API.
+        authorize(JSON.parse(content), getIdCaption, response, resolve);
       });
-    }
+    });
+  }
 }
 
 
@@ -46,21 +47,20 @@ module.exports = {
  * @param {Object} credentials The authorization client credentials.
  * @param {function} callback The callback to call with the authorized client.
  */
-function authorize(credentials, callback,response,resolve) {
+function authorize(credentials, callback, response, resolve) {
   var clientSecret = credentials.installed.client_secret;
   var clientId = credentials.installed.client_id;
   var redirectUrl = credentials.installed.redirect_uris[0];
-  var auth = new googleAuth();
-  var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+  var oauth2Client = new OAuth2(clientId, clientSecret, redirectUrl);
 
   // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, function(err, token) {
+  fs.readFile(TOKEN_PATH, function (err, token) {
     if (err) {
       getNewToken(oauth2Client, callback);
       return Promise.reject('getNewToken');
     } else {
       oauth2Client.credentials = JSON.parse(token);
-      callback(oauth2Client,response,resolve);
+      callback(oauth2Client, response, resolve);
     }
   });
 }
@@ -83,9 +83,9 @@ function getNewToken(oauth2Client, callback) {
     input: process.stdin,
     output: process.stdout
   });
-  rl.question('Enter the code from that page here: ', function(code) {
+  rl.question('Enter the code from that page here: ', function (code) {
     rl.close();
-    oauth2Client.getToken(code, function(err, token) {
+    oauth2Client.getToken(code, function (err, token) {
       if (err) {
         console.log('Error while trying to retrieve access token', err);
         return;
@@ -97,11 +97,6 @@ function getNewToken(oauth2Client, callback) {
   });
 }
 
-/**
- * Store token to disk be used in later program executions.
- *
- * @param {Object} token The token to store to disk.
- */
 function storeToken(token) {
   try {
     fs.mkdirSync(TOKEN_DIR);
@@ -110,73 +105,70 @@ function storeToken(token) {
       throw err;
     }
   }
-  fs.writeFile(TOKEN_PATH, JSON.stringify(token));
+  fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+    if (err) throw err;
+    console.log('Token stored to ' + TOKEN_PATH);
+  });
   console.log('Token stored to ' + TOKEN_PATH);
 }
 
-/**
- * Lists the names and IDs of up to 10 files.
- *
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
-
-function getIdCaption(auth,response,resolve){
+function getIdCaption(auth, response, resolve) {
   var service = google.youtube('v3');
   service.captions.list({
     auth: auth,
     part: "snippet",
     videoId: videoId,
     fields: fieldsOfQuery
-  },function(err,res){
-    if (err){
+  }, function (err, res) {
+    if (err) {
       console.log('The API returned an error' + err)
     }
     console.log(res);
-    console.log('response.items'+res.items[0]['snippet'].status);
-    if (res.items[0]['snippet'].status != "failed"){
+    console.log('response.items' + res.items[0]['snippet'].status);
+    if (res.items[0]['snippet'].status != "failed") {
       idCaption = String(res.items[0].id);
-    }else{
+    } else {
       idCaption = String(res.items[1].id);
     }
     //var obj = JSON.parse(body);
-    console.log("El id del caption:"+ idCaption);
-	  console.log('response:'+response);
+    console.log("El id del caption:" + idCaption);
+    console.log('response:' + response);
     response['id-caption'] = idCaption;
-    getTitle(auth,response,resolve);
-    getCaption(idCaption,response,resolve);
+    getTitle(auth, response, resolve);
+    getCaption(idCaption, response, resolve);
     //resolve(response);
   });
 }
 
 
-function getTitle(auth,response,resolve){
+function getTitle(auth, response, resolve) {
   var service = google.youtube('v3');
   service.videos.list({
-    auth:auth,
+    auth: auth,
     part: "snippet",
     id: videoId,
     fields: "items/snippet/title"
-  },function(err,res){
-    if(err){
-      console.log('The API returned an error'+err);
+  }, function (err, res) {
+    if (err) {
+      console.log('The API returned an error' + err);
     }
-    console.log('dasdadas:'+res);
-    console.log('The title:'+res.items[0].snippet.title);
+    console.log('dasdadas:' + res);
+    console.log('The title:' + res.items[0].snippet.title);
     title = res.items[0].snippet.title;
     response['video-title'] = title;
     //resolve(response);
   });
 }
 
-function getCaption(id_caption,response,resolve){
+function getCaption(id_caption, response, resolve) {
   var options = {
     mode: 'text',
     pythonOptions: [],
-    args: ['--captionid='+response['id-caption'],'--action=download']
+    args: ['--captionid=' + response['id-caption'], '--action=download']
   };
-  python_shell.run('captions.py',options,function(err,results){
+  python_shell.run('captions.py', options, function (err, results) {
     if (err) throw err
-    console.log('finished\n'+results);
+    console.log('finished\n' + results);
     response['caption'] = formatCaptionToJSON(results + '');
     resolve(response);
   });
@@ -184,13 +176,13 @@ function getCaption(id_caption,response,resolve){
 
 
 //This function get a hh:mm:ss.ms --> hh:mm:ss.ms
-function parseToSecondFromFormatVTT(timeInFormatVTT){
+function parseToSecondFromFormatVTT(timeInFormatVTT) {
   var arr = timeInFormatVTT.split('-->');
   var beginTime = arr[0];
   var arrTime = beginTime.split(":");
   //console.log('arrTime:'+arrTime);
-  var hourInSeconds = parseInt(arrTime[0])*60*60;
-  var minuteInSeconds = parseInt(arrTime[1])*60;
+  var hourInSeconds = parseInt(arrTime[0]) * 60 * 60;
+  var minuteInSeconds = parseInt(arrTime[1]) * 60;
   var ss_ms = arrTime[2] + '';
   //console.log('ss.ms'+ss_ms);
   var seconds = parseInt(ss_ms.split(".")[0]);
@@ -200,15 +192,15 @@ function parseToSecondFromFormatVTT(timeInFormatVTT){
   return time;
 }
 
-function formatCaptionToJSON(responseFromPythonCode){
+function formatCaptionToJSON(responseFromPythonCode) {
   var captionJSON = []
   var arr = responseFromPythonCode.split("<->");
-  for (var i = 4; i < arr.length -2 ; i = i+3) {
+  for (var i = 4; i < arr.length - 2; i = i + 3) {
     var time = arr[i].split(",")[1];
-    var text = arr[i+1].split(",")[1];
-    console.log("text:"+text+"time:"+time);
+    var text = arr[i + 1].split(",")[1];
+    console.log("text:" + text + "time:" + time);
     //console.log("arr["+i+"]: "+arr[i]);
-    captionJSON.push([parseToSecondFromFormatVTT(time +''),text]);
+    captionJSON.push([parseToSecondFromFormatVTT(time + ''), text]);
   }
   return captionJSON;
 }
