@@ -19,6 +19,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "google-auth-library": "^2.0.0",
-    "googleapis": "^34.0.0"
+    "googleapis": "^34.0.0",
+    "python-shell": "^1.0.6"
   }
 }
