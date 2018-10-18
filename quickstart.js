@@ -1,8 +1,8 @@
 var fs = require('fs');
 var readline = require('readline');
 var python_shell = require('python-shell');
-var OAuth2 = google.auth.OAuth2;
 var { google } = require('googleapis');
+var OAuth2 = google.auth.OAuth2;
 
 
 //Informacion del video que quiero obtener informacion
