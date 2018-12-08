@@ -6,8 +6,7 @@ var OAuth2 = google.auth.OAuth2;
 
 
 //Informacion del video que quiero obtener informacion
-//var videoId = "QdjO0e10O_I";
-var fieldsOfQuery = "items(id,snippet/status)";
+var fieldsOfQuery = "items(id,snippet)";
 var captionFormat = 'srt';
 var idCaption;
 var title;
@@ -48,6 +47,8 @@ module.exports = {
  * @param {function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, callback, response, resolve) {
+  //console.log('credentials', credentials.installed);
+  //console.log('credentials', credentials.installed);
   var clientSecret = credentials.installed.client_secret;
   var clientId = credentials.installed.client_id;
   var redirectUrl = credentials.installed.redirect_uris[0];
@@ -113,6 +114,7 @@ function storeToken(token) {
 }
 
 function getIdCaption(auth, response, resolve) {
+  console.log('Getting caption id');
   var service = google.youtube('v3');
   service.captions.list({
     auth: auth,
@@ -123,19 +125,24 @@ function getIdCaption(auth, response, resolve) {
     if (err) {
       console.log('The API returned an error' + err)
     }
-    console.log(res);
-    console.log('response.items' + res.items[0]['snippet'].status);
-    if (res.items[0]['snippet'].status != "failed") {
-      idCaption = String(res.items[0].id);
+    console.log('response', res.data.items);
+    const item = res.data.items[0];
+    const snippet = res.data.items[0].snippet;
+    const snippet_status = snippet.status;
+    if (snippet_status != "failed") {
+      console.log('status snippet is ok');
+      idCaption = item.id;
     } else {
-      idCaption = String(res.items[1].id);
+      console.log('status snippet is failed');
+      idCaption = item.id;
     }
     //var obj = JSON.parse(body);
     console.log("El id del caption:" + idCaption);
     console.log('response:' + response);
-    response['id-caption'] = idCaption;
+    response.id_caption = idCaption;
+    resolve(response)
     getTitle(auth, response, resolve);
-    getCaption(idCaption, response, resolve);
+    //getCaption(idCaption, response, resolve);
     //resolve(response);
   });
 }
@@ -156,7 +163,7 @@ function getTitle(auth, response, resolve) {
     console.log('The title:' + res.items[0].snippet.title);
     title = res.items[0].snippet.title;
     response['video-title'] = title;
-    //resolve(response);
+    resolve(response);
   });
 }
 
