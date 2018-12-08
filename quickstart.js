@@ -140,7 +140,6 @@ function getIdCaption(auth, response, resolve) {
     console.log("El id del caption:" + idCaption);
     console.log('response:' + response);
     response.id_caption = idCaption;
-    resolve(response)
     getTitle(auth, response, resolve);
     //getCaption(idCaption, response, resolve);
     //resolve(response);
@@ -149,6 +148,7 @@ function getIdCaption(auth, response, resolve) {
 
 
 function getTitle(auth, response, resolve) {
+  console.log('Get title of video');
   var service = google.youtube('v3');
   service.videos.list({
     auth: auth,
@@ -159,10 +159,9 @@ function getTitle(auth, response, resolve) {
     if (err) {
       console.log('The API returned an error' + err);
     }
-    console.log('dasdadas:' + res);
-    console.log('The title:' + res.items[0].snippet.title);
-    title = res.items[0].snippet.title;
-    response['video-title'] = title;
+    console.log('response', JSON.stringify(res.data));
+    console.log('The title', res.data.items[0].snippet.title);
+    response['video_title'] = res.data.items[0].snippet.title;
     resolve(response);
   });
 }

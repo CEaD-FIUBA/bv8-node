@@ -20,9 +20,7 @@ app.get('/videos/id/:id', function (req, res) {
   var response = {};
   quickstart.foo(response, video_id)
     .then(function (response) {
-      console.log('El response de quickstart:' + response['id-caption']);
       res.status(200);
-      //res.setHeader('Content-type','json');
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.send(response);
     })
