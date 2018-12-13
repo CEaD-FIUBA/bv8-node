@@ -10,7 +10,7 @@ app.get('/favicon.ico', function (req, res) {
 });
 
 
-app.get('/healtcheck', (req, res) => {
+app.get('/', (req, res) => {
   res.send({ 'status': 200 })
 })
 
