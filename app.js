@@ -1,7 +1,7 @@
 var express = require('express');
 var quickstart = require('./quickstart');
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 const app = express();
 app.get('/favicon.ico', function (req, res) {
