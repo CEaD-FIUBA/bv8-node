@@ -16,7 +16,7 @@ var videoId;
 var SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
   process.env.USERPROFILE) + '/.credentials/';
-var TOKEN_PATH = TOKEN_DIR + 'youtube-nodejs-quickstart.json';
+var TOKEN_PATH = 'youtube-nodejs-quickstart.json';
 console.log('TOKEN_DIR' + TOKEN_PATH);
 
 module.exports = {
