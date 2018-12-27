@@ -9,6 +9,8 @@ app.get('/favicon.ico', function (req, res) {
     res.status(204);
 });
 
+app.use(express.static('public'));
+
 
 app.get('/', (req, res) => {
     console.log('GET /');
