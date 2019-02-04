@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
     res.send({ 'status': 200 })
 })
 
-app.get('/videos/id/:id', function (req, res) {
+app.get('/videos/:id', function (req, res) {
     const video_id = req.params.id;
     console.log("GET videos/id/%s", video_id);
     var response = {};
