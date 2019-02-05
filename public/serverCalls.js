@@ -9,7 +9,7 @@ function isTopicText(text) {
     return idx != -1;
 }
 
-function parserCaption(lines) {
+function insertCaptions(lines) {
     lines.forEach(line => {
         const text = line['caption']
         const time = line['time']
@@ -86,7 +86,7 @@ function getCaptions(idCaption) {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             const responseJSON = unescape(JSON.parse(xhttp.responseText));
             console.log('dsdas:' + responseJSON);
-            parseCaption(responseJSON['id_caption']);
+            insertCaptions(responseJSON['captions']);
         }
         console.log('onreadystatechange: ' + xhttp.readyState + 'status: ' + xhttp.status);
     }
