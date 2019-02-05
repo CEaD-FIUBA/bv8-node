@@ -17,12 +17,12 @@ function insertCaptions(lines) {
         htmlLine.val(time)
         if (isTopicText(text)) {
             htmlLine.addClass("chapter");
-            $("#chapters").append(line);
+            $("#chapters").append(htmlLine);
             timesOfChapters.push(time);
             chapters.push(line)
         } else {
             htmlLine.addClass("line")
-            $("#caption").append(line);
+            $("#caption").append(htmlLine);
             captions.push(line)
         }
     });
