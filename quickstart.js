@@ -126,16 +126,8 @@ function getIdCaption(auth, response, resolve) {
       console.log('The API returned an error' + err)
     }
     console.log('response', res.data.items);
-    const item = res.data.items[0];
-    const snippet = res.data.items[0].snippet;
-    const snippet_status = snippet.status;
-    if (snippet_status != "failed") {
-      console.log('status snippet is ok');
-      idCaption = item.id;
-    } else {
-      console.log('status snippet is failed');
-      idCaption = item.id;
-    }
+    const itemOK = res.data.items.filter(item => item.snippet.status != "failed")[0]
+    idCaption = itemOK.id;
     //var obj = JSON.parse(body);
     console.log("El id del caption:" + idCaption);
     console.log('response:' + response);
