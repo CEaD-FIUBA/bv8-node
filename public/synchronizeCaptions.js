@@ -17,11 +17,13 @@ function stopRefreshTime() {
 function remarkCaption(caption) {
   //Si lo que tengo que remarcar es una linea, desmarco la otra linea
   if (preselectCaption != null) {
-    preselectCaption.removeClass('selected-line')
-    preselectCaption.addClass("normal-line")
+    preselectCaption.css('font-weight', 'normal');
+    preselectCaption.css('background-color', 'transparent');
   }
   preselectCaption = caption;
-  caption.addClass('selected-line')
+  caption.css('font-weight', 'bold');
+  caption.css('background-color', 'lightblue');
+  caption.css('border-radius', '5px');
   checkChapterOfChaption();
 }
 

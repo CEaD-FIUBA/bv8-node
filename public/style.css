@@ -21,18 +21,6 @@ p.line{
   padding:8px;
   margin-left:10px;
 }
-
-normal-line {
-  font-weight:'normal';
-  background-color:'transparent';
-}
-
-selected-line {
-  font-weight:'bold';
-  background-color:'lightblue';
-  border-radius:'5px';
-}
-
 p.chapter{
   padding:8px;
 }
