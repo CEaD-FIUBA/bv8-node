@@ -31,11 +31,11 @@ function getCaptions(idCaption) {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             console.log('dsdas:' + xhttp.responseText);
-            var responseJSON = JSON.parse(xhttp.responseText);
+            var responseJSON = unescape(JSON.parse(xhttp.responseText));
             parseCaption(responseJSON['id_caption']);
         }
         console.log('onreadystatechange: ' + xhttp.readyState + 'status: ' + xhttp.status);
     }
     xhttp.send();
-    console.log('getCaption')
+    console.log('getCaption by id')
 }
