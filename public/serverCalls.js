@@ -85,7 +85,8 @@ function getCaptions(idCaption) {
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             const responseJSON = unescape(JSON.parse(xhttp.responseText));
-            console.log('dsdas:' + responseJSON);
+            console.log('dsdas:', xhttp.responseText);
+            console.log('keys', Object.keys(responseJSON));
             insertCaptions(responseJSON['captions']);
         }
         console.log('onreadystatechange: ' + xhttp.readyState + 'status: ' + xhttp.status);
