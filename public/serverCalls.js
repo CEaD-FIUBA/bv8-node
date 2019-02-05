@@ -19,11 +19,11 @@ function insertCaptions(lines) {
             htmlLine.addClass("chapter");
             $("#chapters").append(htmlLine);
             timesOfChapters.push(time);
-            chapters.push(line)
+            chapters.push(htmlLine)
         } else {
             htmlLine.addClass("line")
             $("#caption").append(htmlLine);
-            captions.push(line)
+            captions.push(htmlLine)
         }
     });
     // var array = caption_string.split(",");
