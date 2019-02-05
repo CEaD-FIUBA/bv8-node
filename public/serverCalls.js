@@ -84,9 +84,11 @@ function getCaptions(idCaption) {
     xhttp.open('GET', `https://bbv8-py.herokuapp.com/captions/${idCaption}`, true);
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            const responseJSON = unescape(JSON.parse(xhttp.responseText));
+            const responseJSON = JSON.parse(xhttp.responseText);
             console.log('dsdas:', xhttp.responseText);
             console.log('keys', Object.keys(responseJSON));
+            console.log('keys', Object.keys(responseJSON));
+
             insertCaptions(responseJSON['captions']);
         }
         console.log('onreadystatechange: ' + xhttp.readyState + 'status: ' + xhttp.status);
