@@ -2,40 +2,38 @@ var activeInterval = null;
 var lastSecond = 0;
 var lastPosition = 0;
 
-function refreshTime(){
-  activeInterval = setInterval(updateTime,500);
+function refreshTime() {
+  activeInterval = setInterval(updateTime, 500);
 }
 
 
-function stopRefreshTime(){
+function stopRefreshTime() {
   if (activeInterval != null)
-  clearInterval(activeInterval);
+    clearInterval(activeInterval);
 }
 
 //pre: Recibo un caption que corresponde a  una linea.
 //aca me pasan el caption que corresponde remarcar
-function remarkCaption(caption){
+function remarkCaption(caption) {
   //Si lo que tengo que remarcar es una linea, desmarco la otra linea
-  if (preselectCaption != null){
-      preselectCaption.css('font-weight','normal');
-      preselectCaption.css('background-color','transparent');
+  if (preselectCaption != null) {
+    preselectCaption.removeClass('selected-line')
+    preselectCaption.addClass("normal-line")
   }
   preselectCaption = caption;
-  caption.css('font-weight','bold');
-  caption.css('background-color','lightblue');
-  caption.css('border-radius','5px');
+  caption.addClass('selected-line')
   checkChapterOfChaption();
 }
 
 
 //Para mejorar el perfomance mas adelante uso un diccionario
-function checkChapterOfChaption(){
+function checkChapterOfChaption() {
   for (var i = 0; i < timesOfChapters.length - 1; i++) {
-    var initialTime =  timesOfChapters[i];
-    var finalTime =  timesOfChapters[i+1];
-    if (lastSecond > initialTime && lastSecond < finalTime){
+    var initialTime = timesOfChapters[i];
+    var finalTime = timesOfChapters[i + 1];
+    if (lastSecond > initialTime && lastSecond < finalTime) {
       for (var i = 0; i < chapters.length; i++) {
-        if ($(chapters[i]).val() == initialTime){
+        if ($(chapters[i]).val() == initialTime) {
           remarkChapter(chapters[i]);
           break;
         }
@@ -45,21 +43,21 @@ function checkChapterOfChaption(){
   }
 }
 
-function remarkChapter(chapter){
-  if (preselectChapter != chapter && preselectChapter != null){
-    preselectChapter.css('font-weight','normal');
-    preselectCaption.css('background-color','transparent');
+function remarkChapter(chapter) {
+  if (preselectChapter != chapter && preselectChapter != null) {
+    preselectChapter.css('font-weight', 'normal');
+    preselectCaption.css('background-color', 'transparent');
   }
-  chapter.css('font-weight','bold');
-  chapter.css('background-color','lightblue');
-  chapter.css('border-radius','5px');
+  chapter.css('font-weight', 'bold');
+  chapter.css('background-color', 'lightblue');
+  chapter.css('border-radius', '5px');
   preselectChapter = chapter;
 }
 
 
-function searchCaption(second){
+function searchCaption(second) {
   for (var i = lastPosition; i < captions.length; i++) {
-    if ($(captions[i]).val() == second){
+    if ($(captions[i]).val() == second) {
       console.log("Lo encontré");
       lastSecond = second;
       lastPosition = i;
@@ -70,21 +68,21 @@ function searchCaption(second){
   }
 }
 
-function updateTime(){
+function updateTime() {
   // obtengo el time actual
-  var currentTime =  player.getCurrentTime();
+  var currentTime = player.getCurrentTime();
   // redondeo el numero
-  var currentSecond =  Math.floor(currentTime);
-  if (lastSecond < currentSecond){
+  var currentSecond = Math.floor(currentTime);
+  if (lastSecond < currentSecond) {
     searchCaption(currentSecond);
   }
   //Este es el caso de que el usuario retrocedio el video, seteo para que busques desde el principio
-  if (currentSecond < lastSecond){
+  if (currentSecond < lastSecond) {
     lastPosition = 0;
     searchCaption(currentSecond);
   }
 }
 
-function setVerticalScrollbar(){
-  $("#caption").animate({ scrollTop:$(captions[lastPosition]).position().top +$("#caption").scrollTop() }, "slow");
+function setVerticalScrollbar() {
+  $("#caption").animate({ scrollTop: $(captions[lastPosition]).position().top + $("#caption").scrollTop() }, "slow");
 }
