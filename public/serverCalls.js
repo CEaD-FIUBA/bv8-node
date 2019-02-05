@@ -17,6 +17,7 @@ function insertCaptions(lines) {
         htmlLine.val(time)
         if (isTopicText(text)) {
             htmlLine.addClass("chapter");
+            htmlLine.text(text.split(":")[1])
             $("#chapters").append(htmlLine);
             timesOfChapters.push(time);
             chapters.push(htmlLine)
@@ -24,6 +25,7 @@ function insertCaptions(lines) {
             htmlLine.addClass("line")
             $("#caption").append(htmlLine);
             captions.push(htmlLine)
+            htmlLine.text(text)
         }
     });
     // var array = caption_string.split(",");
