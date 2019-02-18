@@ -12,10 +12,14 @@ app.get('/favicon.ico', function (req, res) {
 app.use(express.static('public'));
 
 
-app.get('/', (req, res) => {
-    console.log('GET /');
+app.get('/status', (req, res) => {
+    console.log('GET /status');
     res.send({ 'status': 200 })
 })
+
+app.get('/express_backend', (req, res) => {
+    res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+});
 
 app.get('/videos/:id', function (req, res) {
     const video_id = req.params.id;
