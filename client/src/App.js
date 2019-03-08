@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import Video from '../src/components/Video'
+import VideoContainer from '../src/components/VideoContainer'
+import 'antd/dist/antd.css';
+
 
 class App extends Component {
 
@@ -31,7 +33,7 @@ class App extends Component {
     return (
       <Router basename="bv8">
         <Switch>
-          <Route path="/video/:videoId" component={Video} />
+          <Route path="/video/:videoId" component={VideoContainer} />
         </Switch>
       </Router>
     );
