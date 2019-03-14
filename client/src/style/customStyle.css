@@ -18,3 +18,35 @@
 .ant-carousel .slick-slide h3 {
   color: #28ABE0;
 }
+
+
+.caption{
+  height: 36px;
+  margin:20px 0px;
+}
+
+.caption-text{
+  text-align: center;
+  padding-top: 9px;
+  height: 36px;
+  background: white
+}
+
+.caption-bar{
+  width: 3px;
+  height: 36px;
+  float: left;
+  margin-bottom: 20px;
+}
+.caption-text-selected{
+  font-weight: bolder;
+}
+
+.bar-caption-selected{
+  background: #0CAADC;
+}
+
+.body{
+  background:#F5F5F5;
+  overflow: auto;
+}
