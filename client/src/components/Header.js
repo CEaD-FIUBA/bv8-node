@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
 
 import { Row, Col, Button, Carousel } from 'antd';
+import { getVideoInformation } from '../Server'
 
 export default class Header extends Component {
 
+
+  state = {
+    videoTitle: ''
+  }
+
+  componentDidMount() {
+    const videoId = this.props.videoId;
+    getVideoInformation(videoId).then((body) => {
+      console.log('body', body);
+      this.setState({ videoTitle: body.video_title })
+    })
+  }
 
   onChange = (a, b, c) => {
     console.log(a, b, c);
@@ -13,7 +26,7 @@ export default class Header extends Component {
     return (
       <div style={{ marginBottom: '20px' }}>
         <Row type="flex" justify="end">
-          <div style={{ marginBottom: '20px', fontWeight: 'bolder', borderBottom: '3px solid #28ABE0', paddingBottom: '3px' }}>Titulo video - Estudios de perdidas y corrección del factor de potencia</div>
+          <div style={{ marginBottom: '20px', fontWeight: 'bolder', borderBottom: '3px solid #28ABE0', paddingBottom: '3px' }}>Titulo video - {this.state.videoTitle}</div>
         </Row>
         <Row type="flex" justify="start">
           <div style={{ marginBottom: '20px', fontWeight: 'bolder', borderBottom: '3px solid #28ABE0', paddingBottom: '3px' }}>Temario</div>

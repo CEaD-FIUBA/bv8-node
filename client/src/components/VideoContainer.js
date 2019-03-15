@@ -14,15 +14,17 @@ class VideoContainer extends Component {
   render() {
 
     console.log('props', this.props);
-
+    const videoId = this.props.match.params.videoId;
     return (
       <Row>
         <Col span={6}>
         </Col>
         <Col span={12}>
-          <Header />
+          <Header
+            videoId={videoId}
+          />
           <Video
-            videoId={this.props.match.params.videoId}
+            videoId={videoId}
           />
           <Body />
         </Col>
