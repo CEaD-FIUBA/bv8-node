@@ -4,16 +4,25 @@ import { Row, Col, Button, Carousel } from 'antd';
 import Header from './Header'
 import Body from './Body'
 import style from '../style/customStyle.css'
+import { getVideoInformation } from '../Server'
 
 class VideoContainer extends Component {
 
-  onChange = (a, b, c) => {
-    console.log(a, b, c);
+  state = {
+    videoId: '',
+    videoTitle: ''
+  }
+
+  componentDidMount() {
+    const videoId = this.props.match.params.videoId;
+    getVideoInformation(videoId).then((body) => {
+      console.log('body', body);
+      this.setState({ videoTitle: body.video_title })
+
+    })
   }
 
   render() {
-
-    console.log('props', this.props);
     const videoId = this.props.match.params.videoId;
     return (
       <Row>
@@ -21,7 +30,7 @@ class VideoContainer extends Component {
         </Col>
         <Col span={12}>
           <Header
-            videoId={videoId}
+            videoTitle={this.state.videoTitle}
           />
           <Video
             videoId={videoId}

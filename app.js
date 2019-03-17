@@ -1,5 +1,6 @@
 var express = require('express');
 var quickstart = require('./quickstart');
+const captionService = require('./service/captionService')
 
 const PORT = process.env.PORT || 8080;
 
@@ -21,6 +22,12 @@ app.get('/express_backend', (req, res) => {
     res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
 });
 
+app.get('captions/:id', (req, res) => {
+    const captionId = req.params.caption_id;
+    console.log(`GET /captions/${captionId}`);
+    captionService.getCaptionsById(captionId)
+});
+
 app.get('/videos/:id', function (req, res) {
     const video_id = req.params.id;
     console.log("GET videos/id/%s", video_id);
@@ -38,4 +45,6 @@ app.get('/videos/:id', function (req, res) {
 
 app.listen(PORT, function () {
     console.log(`Listen the port ${PORT}`);
+    console.log(`Environment ${process.env.ENV}`);
+
 })
