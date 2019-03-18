@@ -131,7 +131,7 @@ function getIdCaption(auth, response, resolve) {
     //var obj = JSON.parse(body);
     console.log("El id del caption:" + idCaption);
     console.log('response:' + response);
-    response.id_caption = idCaption;
+    response.caption_id = idCaption;
     getTitle(auth, response, resolve);
     //getCaption(idCaption, response, resolve);
     //resolve(response);

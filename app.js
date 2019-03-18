@@ -22,10 +22,13 @@ app.get('/express_backend', (req, res) => {
     res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
 });
 
-app.get('captions/:id', (req, res) => {
-    const captionId = req.params.caption_id;
+app.get('/captions/:id', (req, res) => {
+    const captionId = req.params.id;
     console.log(`GET /captions/${captionId}`);
-    captionService.getCaptionsById(captionId)
+    captionService.getCaptionsById(captionId).then((captions) => {
+        console.log('captions', captions);
+        res.send(captions);
+    })
 });
 
 app.get('/videos/:id', function (req, res) {

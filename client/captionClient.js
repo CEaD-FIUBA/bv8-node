@@ -8,7 +8,6 @@ const url = (process.env.ENV == "DEV" ? devHost : prodHost) + service;
 
 console.log(`Service url => ${url}`);
 
-
 exports.downloadCaptionById = (captionId) => {
   return axios.get(util.format(url, captionId))
 }
