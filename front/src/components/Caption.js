@@ -4,13 +4,9 @@ import { log } from 'util';
 
 export default class Caption extends Component {
 
-  state = {
-    selected: false
-  }
-
   onClick = () => {
     console.log('onclik');
-    this.setState({ selected: !this.state.selected })
+    this.setState({ selected: !this.props.selected })
   }
 
   render() {
@@ -19,9 +15,9 @@ export default class Caption extends Component {
       onClick={this.onClick}
     >
       <div
-        className={'caption-bar' + (this.state.selected ? ' bar-caption-selected' : '')}
+        className={'caption-bar' + (this.props.selected ? ' bar-caption-selected' : '')}
       />
-      <div className={'caption-text' + (this.state.selected ? ' caption-text-selected' : '')}>
+      <div className={'caption-text' + (this.props.selected ? ' caption-text-selected' : '')}>
         {this.props.text}
       </div>
     </div >

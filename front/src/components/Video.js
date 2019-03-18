@@ -3,24 +3,49 @@ import YouTube from 'react-youtube';
 import { log } from 'util';
 
 
-const Video = (props) => {
+class Video extends Component {
 
-  console.log('props', props);
+  state = {
+    target: null
+  }
 
-  const opts = {
-    height: '360',
-    width: '100%',
-    playerVars: { // https://developers.google.com/youtube/player_parameters
-      autoplay: 1
-    }
-  };
+  getCurrentTime = () => {
+    console.log('time', this.state.target.getCurrentTime());
+    this.props.callBack(this.state.target.getCurrentTime())
+  }
 
-  return <div>
-    <YouTube
-      videoId={props.videoId}
-      opts={opts}
-    />
-  </div>
+  startSpyPlayer = () => {
+    const ONE_SECOND = 1000;
+    window.setInterval(this.getCurrentTime, ONE_SECOND);
+  }
+
+  render() {
+    const opts = {
+      height: '360',
+      width: '100%',
+      playerVars: { // https://developers.google.com/youtube/player_parameters
+        autoplay: 1
+      }
+    };
+
+
+    return <div>
+      <YouTube
+        videoId={this.props.videoId}
+        opts={opts}
+        onStateChange={(event) => {
+          log('status change')
+          this.setState({ target: event.target }, this.startSpyPlayer)
+        }}
+
+      />
+    </div >
+  }
+
+
+
+
+
 }
 
 export default Video;
