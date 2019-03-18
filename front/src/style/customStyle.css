@@ -49,6 +49,9 @@
 .body{
   background:#F5F5F5;
   overflow: auto;
+  overflow-y:scroll;
+  height: 266px;
+  overflow: hidden;
 }
 
 .selected-theme{
