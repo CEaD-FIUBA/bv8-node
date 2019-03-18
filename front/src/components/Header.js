@@ -5,60 +5,75 @@ import { Row, Col, Button, Carousel } from 'antd';
 export default class Header extends Component {
 
 
+  state = {
+    state_by_time: {}
+  }
+
+  componentDidMount() {
+    console.log('Header themes', this.props.themes);
+  }
+
+
+  getThemes = () => {
+    const SUBGROUP_SIZE = 4;
+    const themes = [...this.props.themes]
+    const themes_subgroups = []
+    const size = this.props.themes.length;
+    const quantityOfGroups = Math.floor(size / SUBGROUP_SIZE) + (size % SUBGROUP_SIZE > 0)
+    for (var i = 0; i < quantityOfGroups; i++) {
+      if (themes.length < SUBGROUP_SIZE) {
+        themes_subgroups.push(themes);
+      } else {
+        themes_subgroups.push(themes.slice(i * SUBGROUP_SIZE, (i + 1) * SUBGROUP_SIZE));
+      }
+    }
+    console.log('themes_subgroups', themes_subgroups);
+    return themes_subgroups;
+  }
+
+  createContent = (groups) => {
+    return groups.map((group, index) => {
+      return <div
+        key={index}
+      >
+        {group.map((item) => {
+          console.log('item.time', item.time);
+          return <Button
+            type="primary"
+            className='theme'
+            key={item.time}
+          >
+            {item.caption.split(":")[1]}
+          </Button>
+        })}
+      </div>
+    })
+  }
+
   render() {
+    const groups = this.getThemes();
+    console.log('ssssssss', groups);
+    const content = this.createContent(groups);
     return (
       <div style={{ marginBottom: '20px' }}>
         <Row type="flex" justify="end">
-          <div style={{ marginBottom: '20px', fontWeight: 'bolder', borderBottom: '3px solid #28ABE0', paddingBottom: '3px' }}>Titulo video - {this.props.videoTitle}</div>
+          <div className='title'>Titulo video - {this.props.videoTitle}</div>
         </Row>
         <Row type="flex" justify="start">
-          <div style={{ marginBottom: '20px', fontWeight: 'bolder', borderBottom: '3px solid #28ABE0', paddingBottom: '3px' }}>Temario</div>
+          <div className='title'>Temario</div>
         </Row>
         <Row>
           <Col span={1}>
-            <Button icon="left" style={{ background: '#F5F5F5', borderColor: '#F5F5F5', color: '#28ABE0', padding: '0px 12px' }} />
+            <Button icon="left" className='side-button' />
           </Col>
           <Col span={22}>
             <Carousel style={{ background: '#F5F5F5' }} afterChange={this.onChange} >
-              <div>
-                <Button type="primary" style={{ background: '#CFD2D4', borderColor: '#CFD2D4', color: 'black', marginRight: '40px' }}>
-                  Tema 1
-            </Button>
-                <div style={{ width: '2px', height: '25px', display: 'inline-block', background: '#28ABE0', position: 'absolute', marginTop: '27px' }}></div>
-                <Button type="primary" style={{ background: '#F5F5F5', borderColor: '#F5F5F5', color: 'black', margin: '0px 40px' }}>
-                  Tema 2
-            </Button>
-                <div style={{ width: '2px', height: '25px', display: 'inline-block', background: '#28ABE0', position: 'absolute', marginTop: '27px' }}></div>
-                <Button type="primary" style={{ background: '#F5F5F5', borderColor: '#F5F5F5', color: 'black', margin: '0px 40px' }}>
-                  Tema 3
-            </Button>
-                <div style={{ width: '2px', height: '25px', display: 'inline-block', background: '#28ABE0', position: 'absolute', marginTop: '27px' }}></div>
-                <Button type="primary" style={{ background: '#F5F5F5', borderColor: '#F5F5F5', color: 'black', margin: '0px 40px' }}>
-                  Tema 4
-            </Button>
-              </div>
-              <div>
-                <Button type="primary" style={{ background: '#CFD2D4', borderColor: '#CFD2D4', color: 'black', marginRight: '40px' }}>
-                  Tema 1
-            </Button>
-                <div style={{ width: '2px', height: '25px', display: 'inline-block', background: '#28ABE0', position: 'absolute', marginTop: '27px' }}></div>
-                <Button type="primary" style={{ background: '#F5F5F5', borderColor: '#F5F5F5', color: 'black', margin: '0px 40px' }}>
-                  Tema 2
-            </Button>
-                <div style={{ width: '2px', height: '25px', display: 'inline-block', background: '#28ABE0', position: 'absolute', marginTop: '27px' }}></div>
-                <Button type="primary" style={{ background: '#F5F5F5', borderColor: '#F5F5F5', color: 'black', margin: '0px 40px' }}>
-                  Tema 3
-            </Button>
-                <div style={{ width: '2px', height: '25px', display: 'inline-block', background: '#28ABE0', position: 'absolute', marginTop: '27px' }}></div>
-                <Button type="primary" style={{ background: '#F5F5F5', borderColor: '#F5F5F5', color: 'black', margin: '0px 40px' }}>
-                  Tema 4
-            </Button>
-              </div>
+              {content}
             </Carousel>
 
           </Col>
           <Col span={1}>
-            <Button icon="right" style={{ background: '#F5F5F5', borderColor: '#F5F5F5', color: '#28ABE0', padding: '0px 12px' }} />
+            <Button icon="right" className='side-button' />
           </Col>
         </Row>
 

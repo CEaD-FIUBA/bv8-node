@@ -4,13 +4,15 @@ import { Row, Col, Button, Carousel } from 'antd';
 import Header from './Header'
 import Body from './Body'
 import style from '../style/customStyle.css'
-import { getVideoInformation } from '../Server'
+import { getVideoInformation, getCaptions } from '../Server'
 
 class VideoContainer extends Component {
 
   state = {
     videoId: '',
-    videoTitle: ''
+    videoTitle: '',
+    themes: [],
+    captions: []
   }
 
   componentDidMount() {
@@ -18,7 +20,9 @@ class VideoContainer extends Component {
     getVideoInformation(videoId).then((body) => {
       console.log('body', body);
       this.setState({ videoTitle: body.video_title })
-
+      getCaptions(body.caption_id).then((body) => {
+        this.setState({ captions: body.captions, themes: body.themes })
+      })
     })
   }
 
@@ -31,11 +35,14 @@ class VideoContainer extends Component {
         <Col span={12}>
           <Header
             videoTitle={this.state.videoTitle}
+            themes={this.state.themes}
           />
           <Video
             videoId={videoId}
           />
-          <Body />
+          <Body
+            captions={this.state.captions}
+          />
         </Col>
         <Col span={6}>
         </Col>

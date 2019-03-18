@@ -50,3 +50,42 @@
   background:#F5F5F5;
   overflow: auto;
 }
+
+.selected-theme{
+  background: #CFD2D4 !important;
+  border-color: #CFD2D4 !important; 
+  color: black !important;
+  margin-right: 40px; 
+}
+
+
+.theme{
+  background:#F5F5F5 !important; 
+  border-color: #F5F5F5 !important;
+  color: black !important;
+  margin: 0px 40px;
+}
+
+
+.separator-bar{
+  width: 2px;
+  height: 25px;
+  display: 'inline-block';
+  background: #28ABE0;
+  position: absolute;
+  margin-top: 27px;
+}
+
+.side-button{
+  background: #F5F5F5 !important; 
+  border-color: #F5F5F5 !important;
+  color: #28ABE0 !important;
+  padding: 0px 12px !important;
+}
+
+.title{
+  margin-bottom: 20px !important;
+  font-weight: bolder !important; 
+  border-bottom: 3px solid #28ABE0 !important;
+  padding-bottom: 3px !important; 
+}
