@@ -54,15 +54,16 @@
   overflow: hidden;
 }
 
-.selected-theme{
+.selected-topic{
   background: #CFD2D4 !important;
   border-color: #CFD2D4 !important; 
   color: black !important;
   margin-right: 40px; 
+  font-weight: bolder !important;
 }
 
 
-.theme{
+.topic{
   background:#F5F5F5 !important; 
   border-color: #F5F5F5 !important;
   color: black !important;

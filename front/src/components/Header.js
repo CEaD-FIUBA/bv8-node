@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 
 import { Row, Col, Button, Carousel } from 'antd';
+import Topic from './Topic'
+import { log } from 'util';
 
 export default class Header extends Component {
-
-
-  state = {
-    state_by_time: {}
-  }
-
-  componentDidMount() {
-    console.log('Header themes', this.props.topics);
-  }
 
 
   getTopics = () => {
@@ -35,14 +28,13 @@ export default class Header extends Component {
       return <div
         key={index}
       >
-        {group.map((item) => {
-          return <Button
-            type="primary"
-            className='theme'
-            key={item.time}
-          >
-            {item.caption.split(":")[1]}
-          </Button>
+        {group.map((item, idx) => {
+          return <Topic
+            key={idx}
+            time={item.time}
+            topicText={item.caption.split(':')[1]}
+            selected={this.props.selectedTopicByTime[item.time]}
+          />
         })}
       </div>
     })

@@ -16,6 +16,7 @@ class VideoContainer extends Component {
     topics: [],
     captions: [],
     selectedCaptionByTime: {},
+    selectedTopicByTime: {},
     captionTimeSelected: null,
     topicTimeSelected: null,
   }
@@ -38,6 +39,10 @@ class VideoContainer extends Component {
       selectedTopicByTime[item.time] = false
     })
     this.setState({ selectedTopicByTime, topics: topics })
+  }
+
+  generateTopics = () => {
+
   }
 
   generateCaptions = () => {
@@ -69,7 +74,18 @@ class VideoContainer extends Component {
         selectedCaptionByTime[this.state.captionTimeSelected] = false
       }
       this.setState({ selectedCaptionByTime, captionTimeSelected: roundedTime })
+    }
 
+    if (this.state.selectedTopicByTime[roundedTime] !== undefined && roundedTime !== this.state.topicTimeSelected) {
+      console.log();
+
+      const selectedTopicByTime = { ...this.state.selectedTopicByTime }
+      selectedTopicByTime[roundedTime] = true
+      if (this.state.topicTimeSelected !== null) {
+        selectedTopicByTime[this.state.topicTimeSelected] = false;
+      }
+      console.log('selectedTopicByTime roundedTime', selectedTopicByTime, roundedTime);
+      this.setState({ selectedTopicByTime, topicTimeSelected: roundedTime })
     }
   }
 
@@ -94,6 +110,8 @@ class VideoContainer extends Component {
           <Header
             videoTitle={this.state.videoTitle}
             topics={this.state.topics}
+            selectedTopicByTime={this.state.selectedTopicByTime}
+
           />
           <Video
             videoId={videoId}
