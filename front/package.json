@@ -8,6 +8,7 @@
     "react-alice-carousel": "^1.13.1",
     "react-dom": "^16.8.2",
     "react-items-carousel": "^2.3.0",
+    "react-perfect-scrollbar": "^1.4.4",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5",

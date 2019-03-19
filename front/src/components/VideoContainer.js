@@ -6,6 +6,7 @@ import Body from './Body'
 import style from '../style/customStyle.css'
 import { getVideoInformation, getCaptions } from '../Server'
 import Caption from './Caption'
+import { log } from 'util';
 
 class VideoContainer extends Component {
 
@@ -29,11 +30,15 @@ class VideoContainer extends Component {
   }
 
   generateCaptions = () => {
-    const toReturn = this.state.captions.map((item) => {
+    const container = document.querySelector('.body');
+    const toReturn = this.state.captions.map((item, idx) => {
       return <Caption
         text={item.caption}
         key={item.time}
         selected={this.state.statusByTime[item.time]}
+        container={container}
+        idx={idx - 1}
+
       />
     })
 
@@ -44,7 +49,7 @@ class VideoContainer extends Component {
   /** Este metodo se va a llamar a medida que el video se esta reproduciendo */
   videoPlayingCallBack = (time) => {
     const roundedTime = Math.round(time)
-    if (this.state.statusByTime[roundedTime] != undefined) {
+    if (this.state.statusByTime[roundedTime] != undefined && roundedTime != this.state.timeSelected) {
       const statusByTimeModified = { ...this.state.statusByTime }
       statusByTimeModified[roundedTime] = true
       if (this.state.timeSelected != null) {

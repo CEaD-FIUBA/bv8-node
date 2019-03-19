@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
-import Caption from './Caption'
-import { log } from 'util';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import ReactDOM from 'react-dom';
+
 
 
 export default class Body extends Component {
 
+  componentDidMount() {
+    console.log('Body pos', ReactDOM.findDOMNode(this).getBoundingClientRect().y);
+  }
+
   render() {
-    return <div className='body'>
+    return <PerfectScrollbar className='body'>
       {this.props.captions}
-    </div>
+    </PerfectScrollbar>
   }
 
 }

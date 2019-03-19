@@ -27,7 +27,6 @@ export default class Header extends Component {
         themes_subgroups.push(themes.slice(i * SUBGROUP_SIZE, (i + 1) * SUBGROUP_SIZE));
       }
     }
-    console.log('themes_subgroups', themes_subgroups);
     return themes_subgroups;
   }
 
@@ -37,7 +36,6 @@ export default class Header extends Component {
         key={index}
       >
         {group.map((item) => {
-          console.log('item.time', item.time);
           return <Button
             type="primary"
             className='theme'
@@ -52,7 +50,6 @@ export default class Header extends Component {
 
   render() {
     const groups = this.getThemes();
-    console.log('ssssssss', groups);
     const content = this.createContent(groups);
     return (
       <div style={{ marginBottom: '20px' }}>

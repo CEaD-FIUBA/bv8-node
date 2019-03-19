@@ -10,7 +10,6 @@ class Video extends Component {
   }
 
   getCurrentTime = () => {
-    console.log('time', this.state.target.getCurrentTime());
     this.props.callBack(this.state.target.getCurrentTime())
   }
 
