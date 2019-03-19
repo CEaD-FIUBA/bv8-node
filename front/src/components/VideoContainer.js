@@ -13,20 +13,31 @@ class VideoContainer extends Component {
   state = {
     videoId: '',
     videoTitle: '',
-    themes: [],
+    topics: [],
     captions: [],
-    statusByTime: {},
-    timeSelected: null
+    selectedCaptionByTime: {},
+    captionTimeSelected: null,
+    topicTimeSelected: null,
   }
 
 
   /* Este metodo recorrer los captions y crear un hash de tipo time-> true/false **/
   processCaptions = (captions) => {
-    const statusByTime = {}
+    const selectedCaptionByTime = { ...this.state.selectedCaptionByTime }
     captions.forEach((item) => {
-      statusByTime[item.time] = false
+      selectedCaptionByTime[item.time] = false
     })
-    this.setState({ statusByTime, captions: captions })
+    this.setState({ selectedCaptionByTime, captions: captions })
+  }
+
+
+  /* Este metodo recorrer los captions y crear un hash de tipo time-> true/false **/
+  processTopics = (topics) => {
+    const selectedTopicByTime = { ...this.state.selectedTopicByTime }
+    topics.forEach((item) => {
+      selectedTopicByTime[item.time] = false
+    })
+    this.setState({ selectedTopicByTime, topics: topics })
   }
 
   generateCaptions = () => {
@@ -35,7 +46,7 @@ class VideoContainer extends Component {
       return <Caption
         text={item.caption}
         key={item.time}
-        selected={this.state.statusByTime[item.time]}
+        selected={this.state.selectedCaptionByTime[item.time]}
         container={container}
         idx={idx - 1}
 
@@ -48,14 +59,21 @@ class VideoContainer extends Component {
 
   /** Este metodo se va a llamar a medida que el video se esta reproduciendo */
   videoPlayingCallBack = (time) => {
+
     const roundedTime = Math.round(time)
-    if (this.state.statusByTime[roundedTime] != undefined && roundedTime != this.state.timeSelected) {
-      const statusByTimeModified = { ...this.state.statusByTime }
-      statusByTimeModified[roundedTime] = true
-      if (this.state.timeSelected != null) {
-        statusByTimeModified[this.state.timeSelected] = false
+
+    if (this.state.selectedCaptionByTime[roundedTime] !== undefined && roundedTime !== this.state.captionTimeSelected) {
+      console.log('this.state.selectedCaptionByTime[roundedTime]', this.state.selectedCaptionByTime[roundedTime]);
+      console.log('change');
+      console.log('this.state.selectedCaptionByTime', this.state.selectedCaptionByTime);
+
+      const selectedCaptionByTime = { ...this.state.selectedCaptionByTime }
+      selectedCaptionByTime[roundedTime] = true
+      if (this.state.captionTimeSelected != null) {
+        selectedCaptionByTime[this.state.captionTimeSelected] = false
       }
-      this.setState({ statusByTime: statusByTimeModified, timeSelected: roundedTime })
+      console.log('selectedCaptionByTimeChanged', selectedCaptionByTime);
+      this.setState({ selectedCaptionByTime, captionTimeSelected: roundedTime })
 
     }
   }
@@ -66,7 +84,7 @@ class VideoContainer extends Component {
       this.setState({ videoTitle: body.video_title })
       getCaptions(body.caption_id).then((body) => {
         this.processCaptions(body.captions);
-        this.setState({ themes: body.themes })
+        this.processTopics(body.themes);
       })
     })
   }
@@ -80,7 +98,7 @@ class VideoContainer extends Component {
         <Col span={12}>
           <Header
             videoTitle={this.state.videoTitle}
-            themes={this.state.themes}
+            topics={this.state.topics}
           />
           <Video
             videoId={videoId}

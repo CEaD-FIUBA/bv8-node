@@ -10,21 +10,21 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-    console.log('Header themes', this.props.themes);
+    console.log('Header themes', this.props.topics);
   }
 
 
-  getThemes = () => {
+  getTopics = () => {
     const SUBGROUP_SIZE = 4;
-    const themes = [...this.props.themes]
+    const topics = [...this.props.topics]
     const themes_subgroups = []
-    const size = this.props.themes.length;
+    const size = topics.length;
     const quantityOfGroups = Math.floor(size / SUBGROUP_SIZE) + (size % SUBGROUP_SIZE > 0)
     for (var i = 0; i < quantityOfGroups; i++) {
-      if (themes.length < SUBGROUP_SIZE) {
-        themes_subgroups.push(themes);
+      if (topics.length < SUBGROUP_SIZE) {
+        themes_subgroups.push(topics);
       } else {
-        themes_subgroups.push(themes.slice(i * SUBGROUP_SIZE, (i + 1) * SUBGROUP_SIZE));
+        themes_subgroups.push(topics.slice(i * SUBGROUP_SIZE, (i + 1) * SUBGROUP_SIZE));
       }
     }
     return themes_subgroups;
@@ -49,7 +49,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const groups = this.getThemes();
+    const groups = this.getTopics();
     const content = this.createContent(groups);
     return (
       <div style={{ marginBottom: '20px' }}>
