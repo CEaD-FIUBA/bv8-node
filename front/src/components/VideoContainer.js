@@ -63,16 +63,11 @@ class VideoContainer extends Component {
     const roundedTime = Math.round(time)
 
     if (this.state.selectedCaptionByTime[roundedTime] !== undefined && roundedTime !== this.state.captionTimeSelected) {
-      console.log('this.state.selectedCaptionByTime[roundedTime]', this.state.selectedCaptionByTime[roundedTime]);
-      console.log('change');
-      console.log('this.state.selectedCaptionByTime', this.state.selectedCaptionByTime);
-
       const selectedCaptionByTime = { ...this.state.selectedCaptionByTime }
       selectedCaptionByTime[roundedTime] = true
       if (this.state.captionTimeSelected != null) {
         selectedCaptionByTime[this.state.captionTimeSelected] = false
       }
-      console.log('selectedCaptionByTimeChanged', selectedCaptionByTime);
       this.setState({ selectedCaptionByTime, captionTimeSelected: roundedTime })
 
     }
