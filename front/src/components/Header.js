@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 
 import { Row, Col, Button, Carousel } from 'antd';
 import Topic from './Topic'
-import { log } from 'util';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const SUBGROUP_SIZE = 4;
 
 export default class Header extends Component {
 
 
   getTopics = () => {
-    const SUBGROUP_SIZE = 4;
     const topics = [...this.props.topics]
     const themes_subgroups = []
     const size = topics.length;
@@ -24,25 +27,32 @@ export default class Header extends Component {
   }
 
   createContent = (groups) => {
-    return groups.map((group, index) => {
-      return <div
-        key={index}
-      >
-        {group.map((item, idx) => {
-          return <Topic
+    const toReturn = groups.map((group, index) => {
+      return group.map((item, idx) => {
+        return <div
+          key={index}
+        >
+          <Topic
             key={idx}
             time={item.time}
             topicText={item.caption.split(':')[1]}
             selected={this.props.selectedTopicByTime[item.time]}
           />
-        })}
-      </div>
+        </div>
+      })
     })
+    console.log('toReturn', toReturn);
+    return toReturn;
+  }
+
+  next = () => {
   }
 
   render() {
     const groups = this.getTopics();
     const content = this.createContent(groups);
+
+    const settings = { initialSlide: 1, slidesToShow: 3, infinite: false }
     return (
       <div style={{ marginBottom: '20px' }}>
         <Row type="flex" justify="end">
@@ -52,17 +62,15 @@ export default class Header extends Component {
           <div className='title'>Temario</div>
         </Row>
         <Row>
-          <Col span={1}>
-            <Button icon="left" className='side-button' />
-          </Col>
-          <Col span={22}>
-            <Carousel style={{ background: '#F5F5F5' }} afterChange={this.onChange} >
+          <Col>
+            <Slider
+              style={{ background: '#F5F5F5' }}
+              afterChange={this.onChange}
+              ref={slider => (this.slider = slider)} {...settings}
+            >
               {content}
-            </Carousel>
+            </Slider>
 
-          </Col>
-          <Col span={1}>
-            <Button icon="right" className='side-button' />
           </Col>
         </Row>
 

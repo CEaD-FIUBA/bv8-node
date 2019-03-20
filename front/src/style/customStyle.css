@@ -1,25 +1,3 @@
-.ant-carousel .slick-slide {
-  text-align: center;
-  height: 80px;
-  line-height: 80px;
-  background: #F5F5F5;
-  overflow: hidden;
-}
-
-.ant-carousel .slick-dots li.slick-active button{
-  background: #28ABE0 !important;
-}
-
-
-.ant-carousel .slick-dots li button{
-  background:black !important;
-}
-
-.ant-carousel .slick-slide h3 {
-  color: #28ABE0;
-}
-
-
 .caption{
   height: 36px;
   margin:20px 0px;
@@ -58,7 +36,7 @@
   background: #CFD2D4 !important;
   border-color: #CFD2D4 !important; 
   color: black !important;
-  margin-right: 40px; 
+  /*margin-right: 40px;*/ 
   font-weight: bolder !important;
 }
 
@@ -67,7 +45,7 @@
   background:#F5F5F5 !important; 
   border-color: #F5F5F5 !important;
   color: black !important;
-  margin: 0px 40px;
+  /*margin: 0px 40px;*/
 }
 
 
