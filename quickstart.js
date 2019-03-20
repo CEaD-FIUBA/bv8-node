@@ -1,6 +1,5 @@
 var fs = require('fs');
 var readline = require('readline');
-var python_shell = require('python-shell');
 var { google } = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 
@@ -154,20 +153,6 @@ function getTitle(auth, response, resolve) {
     console.log('response', JSON.stringify(res.data));
     console.log('The title', res.data.items[0].snippet.title);
     response['video_title'] = res.data.items[0].snippet.title;
-    resolve(response);
-  });
-}
-
-function getCaption(id_caption, response, resolve) {
-  var options = {
-    mode: 'text',
-    pythonOptions: [],
-    args: ['--captionid=' + response['id-caption'], '--action=download']
-  };
-  python_shell.run('captions.py', options, function (err, results) {
-    if (err) throw err
-    console.log('finished\n' + results);
-    response['caption'] = formatCaptionToJSON(results + '');
     resolve(response);
   });
 }
