@@ -1,6 +1,8 @@
 var express = require('express');
 var quickstart = require('./quickstart');
 const captionService = require('./service/captionService')
+const bodyParser = require('body-parser');
+
 
 const PORT = process.env.PORT || 8080;
 
