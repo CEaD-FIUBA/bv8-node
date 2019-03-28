@@ -19,6 +19,7 @@ class VideoContainer extends Component {
     selectedTopicByTime: {},
     captionTimeSelected: null,
     topicTimeSelected: null,
+    target: null
   }
 
 
@@ -41,8 +42,8 @@ class VideoContainer extends Component {
     this.setState({ selectedTopicByTime, topics: topics })
   }
 
-  generateTopics = () => {
-
+  updateTargetReference = (target) => {
+    this.setState({ target: target })
   }
 
   generateCaptions = () => {
@@ -50,11 +51,12 @@ class VideoContainer extends Component {
     const toReturn = this.state.captions.map((item, idx) => {
       return <Caption
         text={item.caption}
+        time={item.time}
         key={item.time}
         selected={this.state.selectedCaptionByTime[item.time]}
         container={container}
         idx={idx - 1}
-
+        target={this.state.target}
       />
     })
 
@@ -77,8 +79,6 @@ class VideoContainer extends Component {
     }
 
     if (this.state.selectedTopicByTime[roundedTime] !== undefined && roundedTime !== this.state.topicTimeSelected) {
-      console.log();
-
       const selectedTopicByTime = { ...this.state.selectedTopicByTime }
       selectedTopicByTime[roundedTime] = true
       if (this.state.topicTimeSelected !== null) {
@@ -116,6 +116,7 @@ class VideoContainer extends Component {
           <Video
             videoId={videoId}
             callBack={(time) => this.videoPlayingCallBack(time)}
+            updateTargetReference={(target) => this.updateTargetReference(target)}
           />
           <Body
             captions={this.generateCaptions()}

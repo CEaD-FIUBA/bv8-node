@@ -11,6 +11,7 @@ class Video extends Component {
 
   getCurrentTime = () => {
     this.props.callBack(this.state.target.getCurrentTime())
+    console.log('target', this.state.target);
   }
 
   startSpyPlayer = () => {
@@ -35,6 +36,7 @@ class Video extends Component {
         onStateChange={(event) => {
           log('status change')
           this.setState({ target: event.target }, this.startSpyPlayer)
+          this.props.updateTargetReference(event.target);
         }}
 
       />

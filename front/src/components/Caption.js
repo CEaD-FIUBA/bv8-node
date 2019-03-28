@@ -14,6 +14,9 @@ export default class Caption extends Component {
   onClick = () => {
     console.log('onclik');
     this.setState({ selected: !this.props.selected })
+    if (this.props.target != null) {
+      this.props.target.seekTo(this.props.time)
+    }
   }
 
 

@@ -56,7 +56,7 @@ export default class Header extends Component {
     return (
       <div style={{ marginBottom: '20px' }}>
         <Row type="flex" justify="end">
-          <div className='title'>Titulo video - {this.props.videoTitle}</div>
+          <div className='title'>{this.props.videoTitle}</div>
         </Row>
         <Row type="flex" justify="start">
           <div className='title'>Temario</div>
