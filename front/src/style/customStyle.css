@@ -4,10 +4,10 @@
 }
 
 .caption-text{
-  text-align: center;
   padding-top: 9px;
   height: 36px;
-  background: white
+  background: white;
+  margin-left: 20px;
 }
 
 .caption-bar{

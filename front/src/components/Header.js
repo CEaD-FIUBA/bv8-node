@@ -37,6 +37,7 @@ export default class Header extends Component {
             time={item.time}
             topicText={item.caption.split(':')[1]}
             selected={this.props.selectedTopicByTime[item.time]}
+            target={this.props.target}
           />
         </div>
       })

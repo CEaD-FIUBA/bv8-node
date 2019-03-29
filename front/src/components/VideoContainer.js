@@ -111,6 +111,7 @@ class VideoContainer extends Component {
             videoTitle={this.state.videoTitle}
             topics={this.state.topics}
             selectedTopicByTime={this.state.selectedTopicByTime}
+            target={this.state.target}
 
           />
           <Video
