@@ -55,7 +55,7 @@ class VideoContainer extends Component {
         key={item.time}
         selected={this.state.selectedCaptionByTime[item.time]}
         container={container}
-        idx={idx - 1}
+        idx={idx}
         target={this.state.target}
       />
     })
