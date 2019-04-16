@@ -54,7 +54,7 @@ export default class Header extends Component {
     const groups = this.getTopics();
     const content = this.createContent(groups);
 
-    const settings = { initialSlide: 1, slidesToShow: 3, infinite: false }
+    const settings = { slidesToScroll: 3, slidesToShow: 3, infinite: false, dots: true }
     return (
       <div style={{ marginBottom: '20px' }}>
         <Row type="flex" justify="end">

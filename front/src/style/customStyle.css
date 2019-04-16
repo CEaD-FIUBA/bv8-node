@@ -48,6 +48,10 @@
   /*margin: 0px 40px;*/
 }
 
+.topic-container{
+  text-align: center !important;
+}
+
 
 .separator-bar{
   width: 2px;
