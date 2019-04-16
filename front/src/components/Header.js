@@ -31,6 +31,7 @@ export default class Header extends Component {
       return group.map((item, idx) => {
         return <div
           key={index}
+          className={'topic-container'}
         >
           <Topic
             key={idx}
