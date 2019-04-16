@@ -104,9 +104,9 @@ class VideoContainer extends Component {
     const videoId = this.props.match.params.videoId;
     return (
       <Row>
-        <Col span={6}>
+        <Col span={5}>
         </Col>
-        <Col span={12}>
+        <Col span={14}>
           <Header
             videoTitle={this.state.videoTitle}
             topics={this.state.topics}
@@ -123,7 +123,7 @@ class VideoContainer extends Component {
             captions={this.generateCaptions()}
           />
         </Col>
-        <Col span={6}>
+        <Col span={5}>
         </Col>
 
       </Row>
