@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import Video from './Video'
-import { Row, Col, Button, Carousel } from 'antd';
+import { Row, Col } from 'antd';
 import Header from './Header'
 import Body from './Body'
 import style from '../style/customStyle.css'
 import { getVideoInformation, getCaptions } from '../Server'
 import Caption from './Caption'
-import { log } from 'util';
 
 class VideoContainer extends Component {
 
