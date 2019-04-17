@@ -124,7 +124,6 @@ function getIdCaption(auth, response, resolve) {
     if (err) {
       console.log('The API returned an error' + err)
     }
-    console.log('response', res.data.items);
     const itemOK = res.data.items.filter(item => item.snippet.status != "failed")[0]
     idCaption = itemOK.id;
     //var obj = JSON.parse(body);
